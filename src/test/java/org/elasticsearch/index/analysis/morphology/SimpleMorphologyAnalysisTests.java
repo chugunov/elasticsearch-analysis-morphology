@@ -23,7 +23,6 @@ import org.apache.lucene.morphology.analyzer.MorphologyAnalyzer;
 import org.apache.lucene.morphology.analyzer.MorphologyFilter;
 import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
-import org.elasticsearch.common.io.FastStringReader;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.Index;
 import org.elasticsearch.index.analysis.NamedAnalyzer;
@@ -41,7 +40,7 @@ public class SimpleMorphologyAnalysisTests extends ESTestCase {
         Settings indexSettings = Settings.builder()
                 .put("index.analysis.analyzer.test.type", "custom")
                 .put("index.analysis.analyzer.test.tokenizer", "standard")
-                .putArray("index.analysis.analyzer.test.filter", "lowercase", "russian_morphology")
+                .put("index.analysis.analyzer.test.filter", "russian_morphology")
                 .build();
 
         return createTestAnalysis(new Index("test", "_na_"), indexSettings, new AnalysisMorphologyPlugin());
@@ -70,15 +69,5 @@ public class SimpleMorphologyAnalysisTests extends ESTestCase {
         NamedAnalyzer englishAnalyzer = testAnalysis.indexAnalyzers.get("english_morphology");
         assertThat(englishAnalyzer.analyzer(), instanceOf(MorphologyAnalyzer.class));
         assertSimpleTSOutput(englishAnalyzer.tokenStream("test", new StringReader("gone")), new String[]{"gone", "go"});
-    }
-
-    public void testPm() throws Exception {
-        LuceneMorphology russianLuceneMorphology = new RussianLuceneMorphology();
-        LuceneMorphology englishLuceneMorphology = new EnglishLuceneMorphology();
-
-        MorphologyAnalyzer russianAnalyzer = new MorphologyAnalyzer(russianLuceneMorphology);
-        TokenStream stream = russianAnalyzer.tokenStream("name", new FastStringReader("тест пм тест"));
-        MorphologyFilter englishFilter = new MorphologyFilter(stream, englishLuceneMorphology);
-        assertSimpleTSOutput(englishFilter, new String[] {"тест", "тесто", "пм", "тест", "тесто"});
     }
 }

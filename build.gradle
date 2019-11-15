@@ -1,93 +1,50 @@
 /*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * Licensed to Elasticsearch under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
-
 buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name 'sonatype-snapshots'
-            url "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        jcenter()
-    }
-    dependencies {
-        classpath "org.elasticsearch.gradle:build-tools:6.0.0"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7"
-    }
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+  dependencies {
+    classpath "org.elasticsearch.gradle:build-tools:7.4.1"    
+  }
 }
 
-apply plugin: 'idea'
-apply plugin: 'eclipse'
 apply plugin: 'elasticsearch.esplugin'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
 
-//repositories {
-//    maven {
-//        name 'bintray-akuznetsov-russianmorphology'
-//        url "http://dl.bintray.com/akuznetsov/russianmorphology"
-//    }
-//}
-
-version = '6.0.0-SNAPSHOT'
-
+version = '7.4.1'
 esplugin {
-    description 'English and Russian Morphology for ElasticSearch.'
-    classname 'org.elasticsearch.plugin.analysis.morphology.AnalysisMorphologyPlugin'
-    name 'analysis-morphology'
+  name 'analysis-morphology'
+  description 'English and Russian Morphology for ElasticSearch.'
+  classname 'org.elasticsearch.plugin.analysis.morphology.AnalysisMorphologyPlugin'
+  dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+  }
 }
 esplugin.version = version
 
-dependencies {
-    compile "org.apache.lucene.morphology:russian:1.4-SNAPSHOT"
-    compile "org.apache.lucene.morphology:english:1.4-SNAPSHOT"
-    compile "org.apache.lucene.morphology:morph:1.4-SNAPSHOT"
-}
-
-publishing {
-    publications {
-        DefaultPublication(MavenPublication) {
-            groupId 'org.elasticsearch'
-            artifactId 'elasticsearch-analysis-morphology'
-            from components.java
-            artifact javadocJar
-            artifact sourcesJar
-            artifact bundlePlugin
-        }
-    }
-}
-
-
-// Only needed if we publish to bintray
-if (project.hasProperty('bintrayUser')) {
-
-    bintray {
-        user = project.property('bintrayUser')
-        key = project.property('bintrayApiKey')
-        pkg {
-            repo = 'elasticsearch-plugins'
-            name = 'elasticsearch-analysis-morphology'
-        }
-        publications = ['DefaultPublication']
-    }
-}
-
-// TODO: temporary workaround until it's fixed in elasticsearch
 thirdPartyAudit.enabled = false
 dependencyLicenses.enabled = false
+checkstyleTest.enabled = false
+testingConventions.enabled = false
 
 project.licenseFile = project.rootProject.file('LICENSE.txt')
 project.noticeFile = project.rootProject.file('NOTICE.txt')
-
