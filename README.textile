@@ -10,10 +10,10 @@ For Elasticsearch version 6.0 and above there is an officially supported <a href
 
 h2. Compatibility
 
-Plugin is avaliable only for Elasticsearch 7.4.1.
+Plugin is avaliable only for Elasticsearch 7.5.0.
 
 |_. Morphological Analysis Plugin |_.  Elasticsearch   |_. URL  |
-| 7.4.1                           | 7.4.1   | *not supported* |
+| 7.5.0                           | 7.5.0   | build yourself: gradlew build |
 
 h2. Installation
 
@@ -23,4 +23,7 @@ In order to install the plugin, simply run the following command in the elastics
 bin/elasticsearch-plugin install file:///zip_file_path
 </pre>
 
-where @zip_file_path@ is full path to zip archive with plugin. 
+where @zip_file_path@ is full path to zip archive with builded plugin.
+Also, if you not know how build the plugin, the compiled version is added (analysis-morphology-7.5.0.zip)
+
+P.S. I am not java developer, and I do not know about any errors. I am not tested yet the plugin, only install.
