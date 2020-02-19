@@ -8,22 +8,30 @@ h2. Switching to Hunspell
 
 For Elasticsearch version 6.0 and above there is an officially supported <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-hunspell-tokenfilter.html">hunspell</a> token filter with russian dictionaries. But in my opinion it behaves much poorer than this plugin because of limited dictionary and no predefined behavior on unknown words.
 
+
+h2. Building
+For building use latest gradle 6.2+ (https://gradle.org/install/#manually) and run
+<pre>
+gradle build
+</pre>.
+Java SDK 13+ required.
+
 h2. Compatibility
 
-Plugin is avaliable only for Elasticsearch 7.5.0.
+Plugin is avaliable only for Elasticsearch 7.6.0.
 
 |_. Morphological Analysis Plugin |_.  Elasticsearch   |_. URL  |
-| 7.5.0                           | 7.5.0   | build yourself: gradlew build |
+| 7.6.0                           | 7.6.0   | build yourself: gradlew build |
+
 
 h2. Installation
 
 In order to install the plugin, simply run the following command in the elasticsearch home directory:
-
 <pre>
-bin/elasticsearch-plugin install file:///zip_file_path
+bin/elasticsearch-plugin install file:///C:\PROJECTS\elasticsearch-analysis-morphology\analysis-morphology-7.6.0.zip
 </pre>
 
 where @zip_file_path@ is full path to zip archive with builded plugin.
-Also, if you not know how build the plugin, the compiled version is added (analysis-morphology-7.5.0.zip)
+Also, if you not know how build the plugin, the compiled version is added (analysis-morphology-7.6.0.zip)
 
 P.S. I am not java developer, and I do not know about any errors. I am not tested yet the plugin, only install.
