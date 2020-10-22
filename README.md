@@ -10,10 +10,12 @@ For Elasticsearch version 6.0 and above there is an officially supported <a href
 
 
 h2. Building
-For building use latest gradle 6.2+ (https://gradle.org/install/#manually) and run
+
+For building use gradle 6.7 (https://gradle.org/install/#manually) and run
+
 <pre>
 gradle build
-</pre>.
+</pre>
 Java SDK 13+ required.
 
 h2. Compatibility
@@ -28,10 +30,5 @@ h2. Installation
 
 In order to install the plugin, simply run the following command in the elasticsearch home directory:
 <pre>
-bin/elasticsearch-plugin install file:///C:\PROJECTS\elasticsearch-analysis-morphology\analysis-morphology-7.9.1.zip
+bin/elasticsearch-plugin install https://github.com/chugunov/elasticsearch-analysis-morphology/releases/download/v7.9.1/analysis-morphology-7.9.1.zip
 </pre>
-
-where @zip_file_path@ is full path to zip archive with builded plugin.
-Also, if you not know how build the plugin, the compiled version is added (analysis-morphology-7.9.1.zip)
-
-P.S. I am not java developer, and I do not know about any errors. I am not tested yet the plugin, only install.
